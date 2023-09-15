@@ -1,9 +1,10 @@
 package com.example.asterixapi;
 
-import com.mongodb.lang.Nullable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,8 +19,22 @@ public class AsterixController {
     }
 
     @GetMapping("/characters")
-    public List<Character> getAllCharacters() {
-        return characterRepo.findAll();
+    public List<Character> getAllCharacters(
+            @Nullable @RequestParam String name,
+            @Nullable @RequestParam Integer age,
+            @Nullable @RequestParam String job
+    ) {
+        List<Character> characters = new ArrayList<>();
+
+        List<Character> allCharacters = characterRepo.findAll();
+        for (Character character : allCharacters) {
+            if (name!=null && !name.equals(character.name())) continue;
+            if (age !=null && age !=       character.age () ) continue;
+            if (job !=null && !job .equals(character.job ())) continue;
+            characters.add(character);
+        }
+
+        return characters;
     }
 
     @PostMapping("/characters")
