@@ -30,21 +30,21 @@ public class AsterixController {
         ));
     }
 */
-    private final AsterixRepo asterixRepo;
+    private final CharacterRepo characterRepo;
 
-    AsterixController(AsterixRepo asterixRepo) {
-        this.asterixRepo = asterixRepo;
+    AsterixController(CharacterRepo characterRepo) {
+        this.characterRepo = characterRepo;
     }
 
     @GetMapping("/characters")
     public List<Character> getCharacters() {
 //        return characters;
-        return asterixRepo.findAll();
+        return characterRepo.findAll();
     }
 
     @PostMapping("/createDummyData")
     public String createDummyData() {
-        asterixRepo.saveAll(List.of(
+        characterRepo.saveAll(List.of(
                 new Character("1", "Asterix", 35, "Krieger"),
                 new Character("2", "Obelix", 35, "Lieferant"),
                 new Character("3", "Miraculix", 60, "Druide"),
@@ -56,7 +56,7 @@ public class AsterixController {
                 new Character("9", "Automatix", 35, "Schmied"),
                 new Character("10", "Grockelix", 35, "Fischer")
         ));
-        return "added %d entries".formatted(asterixRepo.count());
+        return "added %d entries".formatted(characterRepo.count());
     }
 
 
